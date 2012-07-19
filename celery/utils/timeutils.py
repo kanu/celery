@@ -204,7 +204,9 @@ def set_tz(dt, tz):
     """Sets the timezone for a datetime object."""
     if hasattr(tz, 'localize'):
         # works on pytz timezones
-        return tz.localize(dt, is_dst=None)
+        # return tz.localize(dt, is_dst=None)
+        # avoid crashing on datetimes with tzinfos
+        return tz.localize(dt.replace(tzinfo=None), is_dst=None)
     return dt.replace(tzinfo=tz)
 
 
